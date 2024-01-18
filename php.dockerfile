@@ -3,6 +3,8 @@ FROM php:8.3.1-apache
 COPY config/php.ini /usr/local/etc/php/php.ini
 COPY config/ports.conf /etc/apache2/ports.conf
 
+RUN service apache2 stop
+
 RUN apt-get update && \
     apt-get install -y \
     libssl-dev \
@@ -24,6 +26,8 @@ RUN apt-get update && \
 RUN pecl install stomp && \
     docker-php-ext-enable stomp
 
+RUN service apache2 start
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN apt-get remove -y libssl-dev \
@@ -40,7 +44,6 @@ RUN apt-get remove -y libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite
-RUN service apache2 restart
 
 COPY config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
