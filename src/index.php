@@ -12,6 +12,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM users ORDER BY id DESC");
 </head>
  
 <body>
+    <h1>Initial Images</h1>
 <a href="add.php">Add New User</a><br/><br/>
  
     <table width='80%' border=1>
