@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   web:
-    image: saputradev/testing-push-pull-agile_web:1.0.0
+    build:
+      context: .
+      dockerfile: php.dockerfile
     container_name: apache_ttl_sh
     restart: always
     ports:
@@ -13,7 +15,9 @@ services:
       - ./src:/var/www/html
 
   mariadb-db:
-    image: saputradev/testing-push-pull-agile_mariadb-db:1.0.0
+    build:
+      context: .
+      dockerfile: mariadb.dockerfile
     container_name: mariadb_ttl_sh
     restart: always
     environment:
@@ -27,7 +31,9 @@ services:
       - db_data:/var/lib/mysql
 
   phpmyadmin:
-    image: saputradev/testing-push-pull-agile_phpmyadmin:1.0.0
+    build:
+      context: .
+      dockerfile: phpmyadmin.dockerfile
     container_name: phpmyadmin_ttl_sh
     depends_on:
       - mariadb-db
